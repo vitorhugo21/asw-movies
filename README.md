@@ -1,12 +1,12 @@
 <p align="center">
-Projeto da Unidade Curricular de Aplicações e Serviços na Web
+## Projeto da Unidade Curricular de Aplicações e Serviços na Web
 </p>
 
 ## Ferramentas Necessárias
 
--   [Composer](https://getcomposer.org/).
--   [Git](https://git-scm.com/download/win).
--   [NPM](https://nodejs.org/en/).
+-   [Composer](https://getcomposer.org/)
+-   [Git](https://git-scm.com/download/win)
+-   [NPM](https://nodejs.org/en/)
 
 ## Instruções
 
