@@ -1,6 +1,10 @@
-<p align="center">
+<table align="center"><tr><td align="center" width="9999">
+
+# ASW-MOVIES
+
 Projeto da Unidade Curricular de Aplicações e Serviços na Web
-</p>
+
+</td></tr></table>
 
 ## Ferramentas Necessárias
 
@@ -15,6 +19,7 @@ Projeto da Unidade Curricular de Aplicações e Serviços na Web
 -   Ao instalar o Composer, associar o mesmo ao PHP.
 -   Instalar o Git.
 -   Instalar NPM.
+-   Instalar globalmente Laravel com o Composer.
 
 ## Operações no terminal
 
@@ -26,4 +31,8 @@ Projeto da Unidade Curricular de Aplicações e Serviços na Web
 
 -   Verificar o ficheiro .env
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Tutoriais
+
+-   [Laracasts](https://laracasts.com)
+-   [Git](https://www.youtube.com/watch?v=SWYqp7iY_Tc)
+-   [Composer](https://www.youtube.com/watch?v=BGyuKpfMB9E)
