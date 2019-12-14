@@ -16,7 +16,17 @@
 // });
 
 Route::get('/', 'MovieController@index');
+Route::get('/movie/{movie}', 'MovieController@showInfoMovie');
+Route::get('/categories', 'MovieController@getAllCategories');
+Route::get('/cast/{movie}', 'MovieController@getMovieCast');
+
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+Route::get('/clear-cache', function () {
+    Artisan::call('cache:clear');
+    return "Cache is cleared";
+});

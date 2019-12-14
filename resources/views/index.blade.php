@@ -25,8 +25,8 @@
             <li><input type="text" name="" id=""></li>
             <div>
                 <ul class="navbar menu2">
-                    <li><a href="">REGISTER</a></li>
-                    <li><a href="">LOGIN</a></li>
+                    <li><a href="{{ route('register') }}">REGISTER</a></li>
+                    <li><a href="{{ route('login') }}">LOGIN</a></li>
                 </ul>
             </div>
         </ul>
@@ -45,6 +45,7 @@
                     <div class="carousel-caption d-none d-md-block">
                         <h5>{{$movie['original_title']}}</h5>
                         <p>{{$movie['overview']}}</p>
+                        <p>{{$movie['id']}}</p>
                     </div>
                 </div>
                 @endforeach
