@@ -45,7 +45,6 @@
                     <div class="carousel-caption d-none d-md-block">
                         <h5>{{$movie['original_title']}}</h5>
                         <p>{{$movie['overview']}}</p>
-                        <p>{{$movie['id']}}</p>
                     </div>
                 </div>
                 @endforeach
