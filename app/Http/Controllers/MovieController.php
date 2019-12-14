@@ -27,7 +27,7 @@ class MovieController extends Controller
 
     public function showInfoMovie($movie)
     {
-        return view('movie', ['movie' => $this->movie_class->getMovie($movie)]);
+        return view('movie', ['movie' => $this->movie_class->getMovie($movie), 'cast'=> $this->movie_class->getMovieCast($movie)]);
         //return $this->movie_class->getMovie($movie);
     }
 

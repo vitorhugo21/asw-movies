@@ -16,7 +16,7 @@
 // });
 
 Route::get('/', 'MovieController@index');
-Route::get('/movie/{movie}', 'MovieController@showInfoMovie');
+Route::get('/movie/{movie}', 'MovieController@showInfoMovie')->name('movie');
 Route::get('/categories', 'MovieController@getAllCategories');
 Route::get('/cast/{movie}', 'MovieController@getMovieCast');
 
