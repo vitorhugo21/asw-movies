@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="{{ asset('css/myCss.css') }}" rel="stylesheet">
 
-    <title>Hello, world!</title>
+    <title>ASW-MOVIES</title>
 </head>
 
 <body>
@@ -31,7 +31,7 @@
             </div>
         </ul>
     </nav>
-    <div class="content">
+    <div class="content mw-100 mh-100">
         <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-ride="carousel">
             <ol class="carousel-indicators">
                 @for ($index = 0; $index < count($movies); $index++) <li data-target="#carouselExampleIndicators" data-slide-to="{{ $index }}" class="@if($index == 0) active @endif">
