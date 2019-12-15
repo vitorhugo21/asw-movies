@@ -21,6 +21,7 @@ class CreateUserMoviesTable extends Migration
                 $table->boolean('favorite')->default(false);
                 $table->boolean('viewed')->default(false);
                 $table->timestamps();
+                $table->unique(['movie_id', 'user_id']);
                 $table->foreign('user_id')->references('id')->on('users');
             });
         }
