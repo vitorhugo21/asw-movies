@@ -27,7 +27,8 @@ class TheMovieDBClass
 
     public function getMovie($movie)
     {
-        $url = 'https://api.themoviedb.org/3/movie/' . $movie . '?api_key=' . $this->key . '&language=en-US';
+        $url = 'https://api.themoviedb.org/3/movie/' . $movie . '?api_key=' . $this->key . '&language=en-US
+        &append_to_response=videos,credits';
         $request = $this->client->get($url);
         $response = json_decode($request->getBody(), true);
         return $response;
