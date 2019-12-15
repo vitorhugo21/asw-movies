@@ -13,7 +13,7 @@ class UserMoviesController extends Controller
      */
     public function __construct()
     {
-        //$this->middleware('auth');
+        $this->middleware('auth');
     }
 
      /**
@@ -23,8 +23,10 @@ class UserMoviesController extends Controller
      */
     public function index()
     {
-        return view('user-profile', ['user' => [
-            'name' => 'Irene', 'email'=>'jjj@jjj.jjj', 'username' => 'irenet'
-        ]]);
+        $favMovies = \Auth::user()->movies()->where('favorite',1)->get();
+        $watchLaterMovies = \Auth::user()->movies()->where('watch_later',1)->get();
+        $viewedMovies = \Auth::user()->movies()->where('viewed',1)->get();
+
+        return view('user-profile', ['user' => \Auth::user(), 'favorites' => $favMovies, 'watchLater' => $watchLaterMovies, 'viewed' => $viewedMovies]);
     }
 }

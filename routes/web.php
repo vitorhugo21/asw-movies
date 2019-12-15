@@ -20,7 +20,7 @@ Route::get('/movie/{movie}', 'MovieController@showInfoMovie')->name('movie');
 Route::get('/categories', 'MovieController@getAllCategories');
 Route::get('/cast/{movie}', 'MovieController@getMovieCast');
 
-Route::get('/user/profile/{userid}', 'UserMoviesController@index')->name('user');
+Route::get('/user/profile', 'UserMoviesController@index')->name('user');
 
 
 Auth::routes();
