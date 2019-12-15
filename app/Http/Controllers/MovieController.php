@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Client;
 use App\Classes\TheMovieDBClass;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class MovieController extends Controller
 {
@@ -27,10 +26,17 @@ class MovieController extends Controller
 
     public function showInfoMovie($movie)
     {
+        // if (Auth::check()) {
+        //     $userId = Auth::id();
+        //     return User::find($userId)->movies;
+        //     // The user is logged in...
+        // }
+
+
         return view('movie', [
             'movie' => $this->movie_class->getMovie($movie)
         ]);
-        //return $this->movie_class->getMovie($movie);
+        return $this->movie_class->getMovie($movie);
     }
 
     public function getAllCategories()

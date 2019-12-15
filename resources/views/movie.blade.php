@@ -2,6 +2,10 @@
 
 @section('title', config('app.name') . ' - '.$movie['original_title'])
 
+@section('more_styles')
+<link rel="stylesheet" href="{{ asset('css/modal.css') }}">
+@endsection
+
 @section('content')
 
 
@@ -29,13 +33,47 @@
         <p>
           <h4>{{$movie['overview']}}</h4>
         </p>
-        <p>
-          <a href="https://www.youtube.com/watch?v={{ $movie['videos']['results'][0]['key'] }}">VER TRAILER</a>
-        </p>
+        <br>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary video-btn" data-toggle="modal" data-src="https://www.youtube.com/embed/{{ $movie['videos']['results'][0]['key'] }}" data-target="#myModal">
+          VER TRAILER
+        </button>
+        <br><br>
+        @auth
+        <div>
+          <button type="button" class="btn btn-outline-warning">Mark as Favorite</button>
+          <button type="button" class="btn btn-outline-info">See Later</button>
+          <button type="button" class="btn btn-outline-primary">Watched</button>
+        </div>
+        @endauth
       </div>
     </div>
   </div>
-</div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
 
 
-@endsection
+        <div class="modal-body">
+
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <!-- 16:9 aspect ratio -->
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" src="" id="video" allowscriptaccess="always" allow="autoplay" allowfullscreen></iframe>
+          </div>
+
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+  @endsection
+
+  @section('more_scripts')
+  <script src="{{ asset('js/modal.js') }}"></script>
+  @endsection
