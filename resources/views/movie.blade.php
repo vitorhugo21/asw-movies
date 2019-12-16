@@ -4,7 +4,6 @@
 
 @section('more_styles')
 <link rel="stylesheet" href="{{ asset('css/modal.css') }}">
-<link rel="stylesheet" href="{{ asset('css/star.css') }}">
 @endsection
 
 @section('content')
