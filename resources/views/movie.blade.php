@@ -4,6 +4,7 @@
 
 @section('more_styles')
 <link rel="stylesheet" href="{{ asset('css/modal.css') }}">
+<link rel="stylesheet" href="{{ asset('css/star.css') }}">
 @endsection
 
 @section('content')
@@ -26,7 +27,7 @@
         @endforeach
 
         <span>Cast:</span>
-        @foreach ($movie['credits']['cast'] as $people)
+        @foreach (array_slice($movie['credits']['cast'], 0, 5) as $people)
         <span> {{$people['name']}} </span>
         @endforeach
 
@@ -35,17 +36,39 @@
         </p>
         <br>
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary video-btn" data-toggle="modal" data-src="https://www.youtube.com/embed/{{ $movie['videos']['results'][0]['key'] }}" data-target="#myModal">
+        <button type="button" class="btn btn-danger fab fa-youtube video-btn" data-toggle="modal" data-src="https://www.youtube.com/embed/{{ $movie['videos']['results'][0]['key'] }}" data-target="#myModal">
           VER TRAILER
         </button>
+        <!-- <div class="rating">
+          <span>☆</span>
+        </div> -->
         <br><br>
         @auth
+        @php
+        $user = Auth::user();
+        $username = $user->username;
+        $watchLater = $infoUserMovie[$username][0]['watch_later'];
+        $viewed = $infoUserMovie[$username][0]['viewed'];
+        $favorite = $infoUserMovie[$username][0]['favorite'];
+        @endphp
+        <input type="hidden" value="{{$movie['id']}}" id="movieID">
         <div>
-          <button type="button" class="btn btn-outline-warning">Mark as Favorite</button>
-          <button type="button" class="btn btn-outline-info">See Later</button>
-          <button type="button" class="btn btn-outline-primary">Watched</button>
+          @if ($viewed === 1)
+          <button type="button" class="btn btn-outline-primary active fas fa-eye" id="watch"> WATCHED</button>
+          <button type="button" class="btn btn-outline-info far fa-check-circle" id="seeLater" style="display: none"> SEE LATER ?</button>
+          @elseif ($watchLater === 1)
+          <button type="button" class="btn btn-outline-primary fas fa-eye" id="watch"> WATCHED ?</button>
+          <button type="button" class="btn btn-outline-info far fa-check-circle active" id="seeLater"> SEE LATER ?</button>
+          @else
+          <button type="button" class="btn btn-outline-primary fas fa-eye" id="watch"> WATCHED ?</button>
+          <button type="button" class="btn btn-outline-info far fa-check-circle" id="seeLater"> SEE LATER ?</button>
+          @endif
+          <button type="button" class="btn btn-outline-warning far fa-star {{ $favorite === 1 ? 'active' : '' }}" id="favorite">
+            {{ $favorite === 1 ? 'FAVORITE' : 'MARK AS FAVORITE' }}</button>
+
         </div>
         @endauth
+
       </div>
     </div>
   </div>
@@ -76,4 +99,5 @@
 
   @section('more_scripts')
   <script src="{{ asset('js/modal.js') }}"></script>
+  <script src="{{ asset('js/changeMovieState.js') }}"></script>
   @endsection

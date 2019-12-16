@@ -3,6 +3,8 @@
 namespace App\Classes;
 
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Client;
 
 
@@ -14,7 +16,7 @@ class TheMovieDBClass
     public function __construct()
     {
         $this->key = config('movie_key.moviedb_key');
-        $this->client = new Client();
+        $this->client = new Client(['http_errors' => false]);
     }
 
     public function getPopularMovies()

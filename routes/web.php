@@ -19,6 +19,7 @@ Route::get('/', 'MovieController@index');
 Route::get('/movie/{movie}', 'MovieController@showInfoMovie')->name('movie');
 Route::get('/categories', 'MovieController@getAllCategories');
 Route::get('/cast/{movie}', 'MovieController@getMovieCast');
+Route::post('/movie/{movie}/{state}', 'MovieController@changeState');
 
 Route::get('/user/profile', 'UserMoviesController@index')->name('user');
 
