@@ -47,11 +47,15 @@ img {
     object-fit: cover;
 }
 
-
 .pmcard {
     height: 300px;
     max-height: 300px;
     width: 300px;
     max-width: 300px;
     margin-right: 5px;
+}
+
+.actorImg {
+    width: 150px;
+    height: 150px;
 }

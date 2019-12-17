@@ -15,11 +15,21 @@
 //     return view('welcome');
 // });
 
+//use Illuminate\Routing\Route;
+
 Route::get('/', 'MovieController@index');
+
 Route::get('/movie/{movie}', 'MovieController@showInfoMovie')->name('movie');
-Route::get('/categories', 'MovieController@getAllCategories');
-Route::get('/cast/{movie}', 'MovieController@getMovieCast');
 Route::post('/movie/{movie}/{state}', 'MovieController@changeState');
+
+Route::get('/categories', 'MovieController@getAllCategories');
+
+Route::get('/cast/{movie}', 'MovieController@getMovieCast');
+
+Route::get('/actor/{actor}', 'ActorController@getInfoActor')->name('actor');
+
+Route::get('/discover', 'MovieController@discoverMovie')->name('discoverMovie');
+
 
 Route::get('/user/profile', 'UserMoviesController@index')->name('user');
 

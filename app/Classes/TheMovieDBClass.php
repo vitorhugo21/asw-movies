@@ -21,7 +21,7 @@ class TheMovieDBClass
 
     public function getPopularMovies()
     {
-        $url = 'https://api.themoviedb.org/3/movie/popular?api_key=' . $this->key . '&language=en-US&page=1';
+        $url = 'https://api.themoviedb.org/3/discover/movie?api_key=' . $this->key . '&sort_by=popularity.desc';
         $request = $this->client->get($url);
         $response = json_decode($request->getBody(), true);
         return $response['results'];
@@ -30,7 +30,7 @@ class TheMovieDBClass
     public function getMovie($movie)
     {
         $url = 'https://api.themoviedb.org/3/movie/' . $movie . '?api_key=' . $this->key . '&language=en-US
-        &append_to_response=videos,credits';
+        &append_to_response=videos,credits,recommendations';
         $request = $this->client->get($url);
         $response = json_decode($request->getBody(), true);
         return $response;
@@ -47,6 +47,31 @@ class TheMovieDBClass
     public function getMovieCast($movie)
     {
         $url = 'https://api.themoviedb.org/3/movie/' . $movie . '/credits?api_key=' . $this->key;
+        $request = $this->client->get($url);
+        $response = json_decode($request->getBody(), true);
+        return $response;
+    }
+
+    public function getInfoActor($actor)
+    {
+        $url = 'https://api.themoviedb.org/3/person/' . $actor . '?api_key=' . $this->key . '&language=en-US
+        &append_to_response=movie_credits';
+        $request = $this->client->get($url);
+        $response = json_decode($request->getBody(), true);
+        return $response;
+    }
+
+    public function getSimilarMovies($movie)
+    {
+        $url = 'https://api.themoviedb.org/3/movie/' . $movie . '/recommendations?api_key=' . $this->key;
+        $request = $this->client->get($url);
+        $response = json_decode($request->getBody(), true);
+        return $response;
+    }
+
+    public function searchMovie($movie)
+    {
+        $url = 'https://api.themoviedb.org/3/search/movie?api_key=' . $this->key . '&query=' . $movie;
         $request = $this->client->get($url);
         $response = json_decode($request->getBody(), true);
         return $response;
