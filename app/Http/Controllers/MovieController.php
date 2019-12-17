@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use App\Classes\TheMovieDBClass;
 use App\User;
 use App\UserMovies;
-use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 class MovieController extends Controller
@@ -49,6 +50,7 @@ class MovieController extends Controller
                 ['user_id', $user->id],
             ])->get(['watch_later', 'favorite', 'viewed']);
 
+            // return $infoMovie;
             return view('movie', [
                 'movie' => $infoMovie,
                 'infoUserMovie' => $infoUserMovie
@@ -90,5 +92,17 @@ class MovieController extends Controller
             ['movie_id', $movie],
             ['user_id', $user->id],
         ])->value($state));
+    }
+
+    public function discoverMovie(Request $request)
+    {
+
+        $movie = str_replace(' ', '+', strip_tags($request['discoverMovie']));
+        $results = $this->movie_class->searchMovie($movie);
+
+        if (empty($results['results'])) {
+            abort(404, 'MOVIE NOT FOUND');
+        }
+        return $results;
     }
 }

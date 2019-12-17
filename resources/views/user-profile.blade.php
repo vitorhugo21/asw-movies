@@ -7,8 +7,9 @@
 
 <div class="row">
 
+
     <div class="col d-flex justify-content-center">
-        <img src="{{ asset('img/avatar.png') }}" alt="" srcset="">
+        <img src="{{ asset('img/default-avatar.png') }}" alt="" srcset="">
     </div>
 
     <div class="col">
