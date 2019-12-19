@@ -26,14 +26,10 @@ Route::get('/categories', 'MovieController@getAllCategories');
 
 Route::get('/cast/{movie}', 'MovieController@getMovieCast');
 
-<<<<<<< HEAD
-Route::post('/movie/{movie}/{state}', 'MovieController@changeState');
-=======
 Route::get('/actor/{actor}', 'ActorController@getInfoActor')->name('actor');
 
 Route::get('/discover', 'MovieController@discover')->name('discover');
 
->>>>>>> 6e4ed118fb1430cf6a7de32184c2a0a0ec8a8f9b
 
 Route::get('/user/profile', 'UserMoviesController@index')->name('user');
 
