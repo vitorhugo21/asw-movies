@@ -28,7 +28,7 @@ Route::get('/cast/{movie}', 'MovieController@getMovieCast');
 
 Route::get('/actor/{actor}', 'ActorController@getInfoActor')->name('actor');
 
-Route::get('/discover', 'MovieController@discoverMovie')->name('discoverMovie');
+Route::get('/discover', 'MovieController@discover')->name('discover');
 
 
 Route::get('/user/profile', 'UserMoviesController@index')->name('user');

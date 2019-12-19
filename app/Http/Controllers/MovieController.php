@@ -32,51 +32,50 @@ class MovieController extends Controller
         $infoMovie = $this->movie_class->getMovie($movie);
         if (array_key_exists('status_code', $infoMovie)) {
             abort(404, 'MOVIE NOT FOUND');
-        }
+        } else {
+            if (Auth::check()) {
+                // The user is logged in...
+                $user = Auth::user();
+                if (UserMovies::where([['movie_id', $movie], ['user_id', $user->id],])->doesntExist()) {
+                    $newRecord = new UserMovies();
+                    $newRecord->movie_id = $movie;
+                    $newRecord->user_id = $user->id;
+                    $newRecord->created_at = Carbon::now();
+                    $newRecord->save();
+                }
+                $infoUserMovie[$user->username] = UserMovies::where([
+                    ['movie_id', $movie],
+                    ['user_id', $user->id],
+                ])->get(['watch_later', 'favorite', 'viewed']);
 
-        if (Auth::check()) {
-            // The user is logged in...
-            $user = Auth::user();
-            if (UserMovies::where([['movie_id', $movie], ['user_id', $user->id],])->doesntExist()) {
-
-                $newRecord = new UserMovies();
-                $newRecord->movie_id = $movie;
-                $newRecord->user_id = $user->id;
-                $newRecord->created_at = Carbon::now();
-                $newRecord->save();
+                // return $infoMovie;
+                return view('movie', [
+                    'movie' => $infoMovie,
+                    'infoUserMovie' => $infoUserMovie
+                ]);
+            } else {
+                return view('movie', [
+                    'movie' => $infoMovie
+                ]);
             }
-            $infoUserMovie[$user->username] = UserMovies::where([
-                ['movie_id', $movie],
-                ['user_id', $user->id],
-            ])->get(['watch_later', 'favorite', 'viewed']);
-
-            // return $infoMovie;
-            return view('movie', [
-                'movie' => $infoMovie,
-                'infoUserMovie' => $infoUserMovie
-            ]);
         }
-
-        return view('movie', [
-            'movie' => $infoMovie
-        ]);
         // return $this->movie_class->getMovie($movie);
     }
 
     public function getAllCategories()
     {
-        return $this->movie_class->getAllCategories();
+        return $this->movie_class->getAllCategoriesPT();
     }
 
     public function changeState($movie, $state)
     {
         $user = Auth::user();
-        $isFavorite = UserMovies::where([
+        $movieState = UserMovies::where([
             ['movie_id', $movie],
             ['user_id', $user->id],
         ])->value($state);
 
-        if ($isFavorite) {
+        if ($movieState) {
             UserMovies::where([
                 ['movie_id', $movie],
                 ['user_id', $user->id],
@@ -94,15 +93,54 @@ class MovieController extends Controller
         ])->value($state));
     }
 
-    public function discoverMovie(Request $request)
+    public function discover(Request $request)
     {
 
-        $movie = str_replace(' ', '+', strip_tags($request['discoverMovie']));
-        $results = $this->movie_class->searchMovie($movie);
+        $sentence = strip_tags($request['discover']);
+        $searchSentence = str_replace(' ', '+', $sentence);
+        $searchArray['sentence'] = $sentence;
 
-        if (empty($results['results'])) {
-            abort(404, 'MOVIE NOT FOUND');
+        $resultsSearchMovie = $this->movie_class->searchMovie($searchSentence);
+        $resultsSearchActor = $this->movie_class->searchActor($searchSentence);
+
+        if ($this->confirmEmptyResult($resultsSearchMovie['results'])) {
+            $searchArray['moviesResults'] = $this->movie_class->searchMovie($searchSentence);
+        } else {
+            $searchArray['moviesResults'] = 0;
         }
-        return $results;
+
+        if ($this->confirmEmptyResult($resultsSearchActor['results'])) {
+            $searchArray['actorsResults'] = $this->movie_class->searchActor($searchSentence);
+        } else {
+            $searchArray['actorsResults'] = 0;
+        }
+
+
+        return view('search-page', [
+            'result' => $searchArray
+        ]);
+
+        // return $searchArray;
+
+
+
+        //$movieOrPerson = str_replace(' ', '+', strip_tags($request['discoverMovie']));
+
+
+        // $results = $this->movie_class->searchMovie($movie);
+
+        // if (empty($results['results'])) {
+        //     abort(404, 'MOVIE NOT FOUND');
+        // }
+        // return $results;
+    }
+
+    private function confirmEmptyResult($results)
+    {
+        if (!empty($results)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
