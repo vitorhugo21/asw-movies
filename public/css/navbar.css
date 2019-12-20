@@ -4,9 +4,6 @@ nav {
     z-index: auto;
 }
 
-.navbar li a {
-    font-weight: bold;
-}
 
 #navbarDropdown {
     margin: 0;
