@@ -11,7 +11,6 @@
 
     <!-- Bootstrap CSS -->
     <link type="text/css" rel="stylesheet" href="{{ mix('css/app.css') }}">
-    <!-- <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}"> -->
     <link href="{{ asset('css/myCss.css') }}" rel="stylesheet">
     @yield('more_styles')
 
@@ -19,15 +18,56 @@
 </head>
 
 <body>
+    <nav>
+        <div class="hamburger">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+        <ul class="navbar">
+            <li><a href="">ASW-MOVIES</a></li>
+            <form action="{{ route('discover') }}" method="get">
+                <li><input type="text" name="discover" id=""></li>
+                <input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;" tabindex="-1" />
+            </form>
+            <div>
+                <ul class="navbar menu2">
+                    @guest
+                    <li><a href="{{ route('register') }}">REGISTER</a></li>
+                    <li><a href="{{ route('login') }}">LOGIN</a></li>
+                    @else
+                    <li class="nav-item dropdown">
+
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            {{ Auth::user()->username }} <span class="caret"></span>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item text-dark w-25" href="{{ route('user') }}">
+                                {{ ('PROFILE') }}
+                            </a>
+
+                            <a class=" dropdown-item text-dark w-25" href="{{ route('logout') }}" onclick="event.preventDefault();
+        document.getElementById('logout-form').submit();">
+                                {{ ('LOGOUT') }}
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </div>
+                    </li>
+                    @endguest
+                </ul>
+            </div>
+        </ul>
+    </nav>
     <div class="container">
         @yield('content')
     </div>
+
     <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="{{ asset('js/app.js') }}"></script>
-    <!-- <script src="{{ asset('js/jquery-3.4.1.slim.min.js') }}"></script>
-    <script src="{{ asset('js/popper.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script> -->
     @yield('more_scripts')
 
 </body>
