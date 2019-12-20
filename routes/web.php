@@ -17,7 +17,7 @@
 
 //use Illuminate\Routing\Route;
 
-Route::get('/', 'MovieController@index');
+Route::get('/', 'MovieController@index')->name('index');;
 
 Route::get('/movie/{movie}', 'MovieController@showInfoMovie')->name('movie');
 Route::post('/movie/{movie}/{state}', 'MovieController@changeState');

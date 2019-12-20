@@ -1,10 +1,13 @@
 @extends('layouts.layout')
 
 @section('title', 'ASW-MOVIES - '.$user['username'])
-
+@section('more_styles')
+<link rel="stylesheet" href="{{ asset('css/modal.css') }}">
+<link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
+@endsection
 
 @section('content')
-
+<div class = "container">
 <div class="row">
 
 
@@ -87,5 +90,5 @@
         </div>
     </div>
 </div>
-
+</div>
 @endsection

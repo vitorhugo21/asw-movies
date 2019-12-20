@@ -25,7 +25,7 @@
             <div class="line"></div>
         </div>
         <ul class="navbar">
-            <li><a href="">ASW-MOVIES</a></li>
+            <li><a href="{{route('index')}}">ASW-MOVIES</a></li>
             <form action="{{ route('discover') }}" method="get">
                 <li><input type="text" name="discover" id=""></li>
                 <input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;" tabindex="-1" />
@@ -62,7 +62,7 @@
             </div>
         </ul>
     </nav>
-    <div class="container">
+    <div>
         @yield('content')
     </div>
 

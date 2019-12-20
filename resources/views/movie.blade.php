@@ -9,7 +9,7 @@
 
 @section('content')
 
-
+<div class="container">
 <div class="row">
   <div class="col d-flex justify-content-center poster_path">
     <img class="d-block" src="https://image.tmdb.org/t/p/original{{$movie['poster_path']}}" alt="{{$movie['original_title']}}" srcset="">
@@ -132,6 +132,7 @@
 
     </div>
   </div>
+</div>
 </div>
 @endsection
 

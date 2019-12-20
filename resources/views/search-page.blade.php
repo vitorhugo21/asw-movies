@@ -1,8 +1,14 @@
 @extends('layouts.layout')
 
 @section('title', config('app.name') . ' - [' . $result['sentence'] . ']')
+@section('more_styles')
+<link rel="stylesheet" href="{{ asset('css/modal.css') }}">
+<link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
+@endsection
+
 
 @section('content')
+<div class="container">
 <div class="row">
     <div class="col-4">
         <div class="list-group" id="list-tab" role="tablist">
@@ -73,5 +79,6 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 @endsection
