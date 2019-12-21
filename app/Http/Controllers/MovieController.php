@@ -48,7 +48,7 @@ class MovieController extends Controller
                     ['user_id', $user->id],
                 ])->get(['watch_later', 'favorite', 'viewed']);
 
-                // return $infoMovie;
+                //return $infoMovie;
                 return view('movie', [
                     'movie' => $infoMovie,
                     'infoUserMovie' => $infoUserMovie
@@ -99,18 +99,42 @@ class MovieController extends Controller
         $sentence = strip_tags($request['discover']);
         $searchSentence = str_replace(' ', '+', $sentence);
         $searchArray['sentence'] = $sentence;
+        $movies = 1;
+        $actors = 0;
 
         $resultsSearchMovie = $this->movie_class->searchMovie($searchSentence);
         $resultsSearchActor = $this->movie_class->searchActor($searchSentence);
 
+
         if ($this->confirmEmptyResult($resultsSearchMovie['results'])) {
-            $searchArray['moviesResults'] = $this->movie_class->searchMovie($searchSentence);
+            $searchArray['moviesResults'] = $resultsSearchMovie;
+            if ($searchArray['moviesResults']['total_pages'] > 1) {
+                $searchArray['moviesResults']['results'] =
+                    $this->getAllPages($resultsSearchMovie, $sentence, $movies);
+                $searchArray['moviesResults']['results'] =
+                    $this->sortByPopularity($searchArray['moviesResults']['results']);
+            } else {
+                $searchArray['moviesResults']['results'] =
+                    $this->sortByPopularity($searchArray['moviesResults']['results']);
+            }
         } else {
             $searchArray['moviesResults'] = 0;
         }
 
+
+
         if ($this->confirmEmptyResult($resultsSearchActor['results'])) {
-            $searchArray['actorsResults'] = $this->movie_class->searchActor($searchSentence);
+            $searchArray['actorsResults'] = $resultsSearchActor;
+            if ($searchArray['actorsResults']['total_pages'] > 1) {
+                $searchArray['actorsResults']['results'] =
+                    $this->getAllPages($resultsSearchActor, $sentence, $actors);
+                $searchArray['actorsResults']['results'] =
+                    $this->sortByPopularity($searchArray['actorsResults']['results']);
+            } else {
+                $searchArray['actorsResults']['results'] =
+                    $this->sortByPopularity($searchArray['actorsResults']['results']);
+            }
+            $searchArray['actorsResults']['results'] = $this->removeFakeActors($searchArray['actorsResults']['results']);
         } else {
             $searchArray['actorsResults'] = 0;
         }
@@ -120,7 +144,7 @@ class MovieController extends Controller
             'result' => $searchArray
         ]);
 
-        // return $searchArray;
+        return $searchArray;
 
 
 
@@ -142,5 +166,57 @@ class MovieController extends Controller
         } else {
             return false;
         }
+    }
+
+    private function getAllPages($arrayMovieOrActor, $sentence, $moviesOrActors)
+    {
+        $numberOfPages = $arrayMovieOrActor['total_pages'];
+        $currentPage = $arrayMovieOrActor['page'];
+        $resultsPerPage = count($arrayMovieOrActor['results']);
+        $page = [];
+        $count = 0;
+
+        if ($numberOfPages > 1) {
+
+            if ($moviesOrActors === 1) {
+                for ($index = ($currentPage + 1); $index <= $numberOfPages; $index++) {
+                    $page[$count] = $this->movie_class->searchMovie($sentence, $index)['results'];
+                    $count++;
+                }
+            } else {
+                for ($index = ($currentPage + 1); $index <= $numberOfPages; $index++) {
+                    $page[$count] = $this->movie_class->searchActor($sentence, $index)['results'];
+                    $count++;
+                }
+            }
+
+            for ($index = 0; $index < count($page); $index++) {
+                for ($kindex = 0; $kindex < count($page[$index]); $kindex++) {
+                    $arrayMovieOrActor['results'][$resultsPerPage] = $page[$index][$kindex];
+                    $resultsPerPage++;
+                }
+            }
+        }
+        return $arrayMovieOrActor['results'];
+    }
+
+    private function sortByPopularity($results)
+    {
+        usort($results, function ($a, $b) {
+            return $b['popularity'] <=> $a['popularity'];
+        });
+
+        return array_slice($results, 0, 20);
+    }
+
+    private function removeFakeActors($actorsArray)
+    {
+
+        for ($index = 0; $index < count($actorsArray); $index++) {
+            if (!$this->confirmEmptyResult($actorsArray[$index]['known_for'])) {
+                unset($actorsArray[$index]);
+            }
+        }
+        return $actorsArray;
     }
 }
