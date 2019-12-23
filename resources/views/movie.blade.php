@@ -3,8 +3,8 @@
 @section('title', config('app.name') . ' - '.$movie['original_title'])
 
 @section('more_styles')
-<link rel="stylesheet" href="{{ asset('css/modal.css') }}">
-<link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
+<link href="{{ asset('css/modal.css') }}" rel="stylesheet">
+<link href="{{ asset('css/navbar.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')

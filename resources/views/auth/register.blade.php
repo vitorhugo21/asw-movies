@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.layout')
 @section('more_styles')
 <link href="{{ asset('css/navbar.css') }}" rel="stylesheet">
 @endsection
