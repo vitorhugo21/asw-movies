@@ -16,7 +16,7 @@
                     <div class="carousel-caption d-none d-md-block">
                         <h5>{{$movie['original_title']}}</h5>
                         <p>{{$movie['overview']}}</p>
-                        <a href="{{ route('movie', $movie['id']) }}">See details</a>
+                        <button type="submit" class="btn btn-primary"> <a style="color:white" href="{{ route('movie', $movie['id']) }}">See details</a> </button>
 
                     </div>
                 </div>
