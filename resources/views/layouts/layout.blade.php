@@ -10,7 +10,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Bootstrap CSS -->
-    <link type="text/css" rel="stylesheet" href="{{ mix('css/app.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link href="{{ asset('css/myCss.css') }}" rel="stylesheet">
     @yield('more_styles')
 
@@ -19,11 +19,6 @@
 
 <body>
     <nav>
-        <div class="hamburger">
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-        </div>
         <ul class="navbar">
             <li><a href="{{route('index')}}">ASW-MOVIES</a></li>
             <form action="{{ route('discover') }}" method="get">
