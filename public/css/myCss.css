@@ -43,15 +43,16 @@ input {
     border-radius: 10px;
 }
 
-a:hover, a:visited, a:link, a:active
-{
+a:hover,
+a:visited,
+a:link,
+a:active {
     text-decoration: none;
 }
 
-
 img {
     height: 100%;
-    object-fit: cover;
+    /* object-fit: cover; */
 }
 
 .pmcard {
@@ -66,3 +67,21 @@ img {
     width: 150px;
     height: 150px;
 }
+
+.paddingRight {
+    padding-right: 0;
+}
+
+.moviesBtns {
+    font-size: medium;
+    font-weight: bold;
+}
+
+.poster_path .d-block {
+    width: 400px;
+    height: 500px;
+}
+
+/* .card {
+    height: 100%;
+} */

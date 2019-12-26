@@ -1,3 +1,11 @@
+const btnImdb = document.getElementById("imdb");
+
+btnImdb.onclick = () => {
+    const page = btnImdb.getAttribute("data-src");
+    window.open(page);
+};
+
+//Jquery - open youtube trailer
 $(document).ready(function() {
     let $videoSrc;
     $(".video-btn").click(function() {

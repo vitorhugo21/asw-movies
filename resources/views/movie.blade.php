@@ -17,27 +17,45 @@
       @else
       <img src="{{ asset('img/no-image.jpeg') }}" class="card-img" alt="{{ $movie['original_title'] }}">
       @endif
-      <div class="col">
+      <div class="col paddingRight">
         <div class="card">
           <div class="card-body">
-            <h3>{{ $movie['original_title'] }}</h3>
-            <h4>{{ $movie['release_date'] }}</h4>
-            <span class="badge badge-secondary">{{ $movie['runtime'] }} min</span>
+            <div class="d-flex">
+              <span class="font-weight-bold h2 align-self-end">{{ $movie['original_title'] }}</span>&nbsp;
+              <span class="align-self-center">({{ date('d-m-Y', strtotime($movie['release_date'])) }})</span>
+            </div>
+            <span class="text-uppercase">{{ $movie['runtime'] }} min | </span>
+
             @if ($movie['genres'])
-            @foreach ($movie['genres'] as $genre)
-            <h4>{{$genre['name']}}</h4>
+            @foreach ($movie['genres'] as $key => $genre)
+            @if (($key+1) === (count($movie['genres'])))
+            <span class="text-uppercase">{{ $genre['name'] }}</span>
+            @else
+            <span class="text-uppercase">{{ $genre['name'] }},</span>
+            @endif
             @endforeach
             @endif
+            <br><br>
+            <h5>DIRECTOR</h5>
+            @foreach ($movie['credits']['crew'] as $member)
+            @if ($member['job'] === 'Director')
+            <span>{{ $member['name'] }}</span>
+            @endif
+            @endforeach
+            <br><br>
+            <h5>OVERVIEW</h5>
             <p>
-              <h4>{{$movie['overview']}}</h4>
+              <span>{{$movie['overview']}}</span>
             </p>
             <br>
             @if ($movie['videos']['results'])
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-danger fab fa-youtube video-btn" data-toggle="modal" data-src="https://www.youtube.com/embed/{{ $movie['videos']['results'][0]['key'] }}" data-target="#myModal">
+            <button type="button" class="btn btn-danger fab fa-youtube video-btn moviesBtns" data-toggle="modal" data-src="https://www.youtube.com/embed/{{ $movie['videos']['results'][0]['key'] }}" data-target="#myModal">
               TRAILER
             </button>
-            <a href="https://www.imdb.com/title/{{ $movie['imdb_id'] }}" target="_blank" rel="noopener noreferrer" class="btn btn-warning">IMDB</a>
+            <button type="button" class="btn btn-warning fas fa-arrow-circle-right moviesBtns" id="imdb" data-src="https://www.imdb.com/title/{{ $movie['imdb_id'] }}">
+              IMDB
+            </button>
             @endif
             <br><br>
             @auth
@@ -51,17 +69,17 @@
             <input type="hidden" value="{{$movie['id']}}" id="movieID">
             <div>
               @if ($viewed === 1)
-              <button type="button" class="btn btn-outline-primary active fas fa-eye font-weight-bold" id="watch"> WATCHED</button>
-              <button type="button" class="btn btn-outline-info far fa-check-circle font-weight-bold" id="seeLater" style="display: none"> SEE LATER ?</button>
+              <button type="button" class="btn btn-outline-primary text-dark active fas fa-eye moviesBtns" id="watch"> WATCHED</button>
+              <button type="button" class="btn btn-outline-info text-dark far fa-check-circle moviesBtns" id="seeLater" style="display: none"> SEE LATER ?</button>
               @elseif ($watchLater === 1)
-              <button type="button" class="btn btn-outline-primary fas fa-eye font-weight-bold" id="watch"> WATCHED ?</button>
-              <button type="button" class="btn btn-outline-info far fa-check-circle active font-weight-bold" id="seeLater"> SEE LATER ?</button>
+              <button type="button" class="btn btn-outline-primary text-dark fas fa-eye moviesBtns" id="watch"> WATCHED ?</button>
+              <button type="button" class="btn btn-outline-info text-dark far fa-check-circle active moviesBtns" id="seeLater"> SEE LATER</button>
               @else
-              <button type="button" class="btn btn-outline-primary fas fa-eye font-weight-bold" id="watch"> WATCHED ?</button>
-              <button type="button" class="btn btn-outline-info far fa-check-circle font-weight-bold" id="seeLater"> SEE LATER ?</button>
+              <button type="button" class="btn btn-outline-primary text-dark fas fa-eye moviesBtns" id="watch"> WATCHED ?</button>
+              <button type="button" class="btn btn-outline-info text-dark far fa-check-circle moviesBtns" id="seeLater"> SEE LATER ?</button>
               @endif
-              <button type="button" class="btn btn-outline-warning text-dark far fa-star font-weight-bold {{ $favorite === 1 ? 'active' : '' }}" id="favorite">
-                {{ $favorite === 1 ? 'FAVORITE' : 'MARK AS FAVORITE' }}</button>
+              <button type="button" class="btn btn-outline-warning text-dark far fa-star moviesBtns {{ $favorite === 1 ? 'active' : '' }}" id="favorite">
+                {{ $favorite === 1 ? ' FAVORITE' : ' FAVORITE ?' }}</button>
 
             </div>
             @endauth
@@ -70,9 +88,9 @@
         </div>
       </div>
     </div>
-
-
   </div>
+</div>
+<div class="container">
   <!-- Collapse -->
   @if ($movie['credits']['cast'])
   <p>
@@ -81,16 +99,18 @@
     </button>
   </p>
   <div class="collapse" id="cast">
-    <div class="row row-cols-1 row-cols-md-5">
+    <div class="row">
       @foreach (array_slice($movie['credits']['cast'], 0, 5) as $people)
-      <a href="{{ route('actor', $people['id']) }}">
-        <div class="card" style="width: 18rem;">
-          <img src="https://image.tmdb.org/t/p/original{{$people['profile_path']}}" class="card-img-top actorImg" alt="{{$people['name']}}">
-          <div class="card-body">
-            <h5 class="card-title">{{$people['name']}}</h5>
+      <div class="col">
+        <div class="container">
+          <div class="d-flex flex-column align-items-center">
+            <img src="https://image.tmdb.org/t/p/original{{$people['profile_path']}}" class="card-img-top actorImg" alt="{{$people['name']}}">
+            <div class="">
+              <h5 class="">{{$people['name']}}</h5>
+            </div>
           </div>
         </div>
-      </a>
+      </div>
       @endforeach
     </div>
   </div>
@@ -141,9 +161,10 @@
   </div>
   @endif
 </div>
+
 @endsection
 
 @section('more_scripts')
-<script src="{{ asset('js/modal.js') }}"></script>
 <script src="{{ asset('js/changeMovieState.js') }}"></script>
+<script src="{{ asset('js/moviePage.js') }}"></script>
 @endsection

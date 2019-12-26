@@ -37,12 +37,15 @@ async function changeBtnState() {
             this.classList.remove("active");
             switch (this.name) {
                 case "favorite":
-                    this.innerHTML = " MARK AS FAVORITE";
+                    this.innerHTML = " FAVORITE ?";
                     break;
                 case "viewed":
                     this.innerHTML = " WATCHED?";
                     document.getElementById("seeLater").style.display =
                         "inline-block";
+                    break;
+                case "watch_later":
+                    this.innerHTML = " SEE LATER ?";
                     break;
             }
         } else {
@@ -54,6 +57,9 @@ async function changeBtnState() {
                 case "viewed":
                     this.innerHTML = " WATCHED";
                     document.getElementById("seeLater").style.display = "none";
+                    break;
+                case "watch_later":
+                    this.innerHTML = " SEE LATER";
                     break;
             }
         }

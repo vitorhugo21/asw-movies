@@ -4,7 +4,6 @@ nav {
     z-index: auto;
 }
 
-
 #navbarDropdown {
     margin: 0;
     padding: 0;
@@ -13,9 +12,4 @@ nav {
 .container {
     margin-top: 2em;
     margin-bottom: 2em;
-}
-
-.poster_path .d-block {
-    width: 400px;
-    height: 500px;
 }
