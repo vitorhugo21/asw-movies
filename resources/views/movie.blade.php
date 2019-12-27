@@ -90,7 +90,12 @@
     </div>
   </div>
 </div>
+
+
+
 <div class="container">
+
+
   <!-- Collapse -->
   @if ($movie['credits']['cast'])
   <p>
@@ -98,68 +103,126 @@
       CAST
     </button>
   </p>
+
+
+
   <div class="collapse" id="cast">
-    <div class="row">
-      @foreach (array_slice($movie['credits']['cast'], 0, 5) as $people)
-      <div class="col">
-        <div class="container">
-          <div class="d-flex flex-column align-items-center">
-            <img src="https://image.tmdb.org/t/p/original{{$people['profile_path']}}" class="card-img-top actorImg" alt="{{$people['name']}}">
-            <div class="">
-              <h5 class="">{{$people['name']}}</h5>
+
+    <div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
+
+      <!--Controls-->
+      <div class="controls-top d-flex justify-content-center">
+        <a class="btn-floating h2 px-2" href="#multi-item-example" data-slide="prev"><i class="fas fa-chevron-circle-left"></i></a>
+        <a class="btn-floating h2 px-2" href="#multi-item-example" data-slide="next"><i class="fa fa-chevron-circle-right"></i></a>
+      </div>
+      <!--/.Controls-->
+
+      @php
+      $totalCast = count($movie['credits']['cast']);
+      $divideCastPerFive = ceil($totalCast / 5);
+      @endphp
+
+      <!--Indicators-->
+      <ol class="carousel-indicators">
+
+        @for ($index = 0; $index < $divideCastPerFive; $index++) <li data-target="#multi-item-example" data-slide-to="{{ $index }}" class="@if($index == 0) active @endif">
+          </li>
+          @endfor
+      </ol>
+      <!--/.Indicators-->
+
+      <div class="carousel-inner">
+
+        @for ($index = 0; $index < round(($totalCast/10))*10; $index+=5) <div class="carousel-item @if($index === 0) active @endif">
+          <div class="row">
+
+
+            @foreach (array_slice($movie['credits']['cast'], $index, 5) as $people)
+            <div class="col">
+              <div class="container">
+                <div class="d-flex flex-column align-items-center">
+                  <a href="{{ route('actor', $people['id']) }}" class="text-decoration-none text-reset">
+                    @if ($people['profile_path'])
+                    <img src="https://image.tmdb.org/t/p/original{{$people['profile_path']}}" class="card-img-top actorImg" alt="{{$people['name']}}">
+                    @else
+                    <img src="{{ asset('img/no-image.jpeg') }}" class="card-img-top actorImg" alt="{{$people['name']}}">
+                    @endif
+                  </a>
+                  <br>
+                  <div class="">
+                    <a href="{{ route('actor', $people['id']) }}" class="text-decoration-none text-reset">
+                      <h5 class="movieCast">{{$people['name']}}</h5>
+                    </a>
+                  </div>
+                </div>
+              </div>
             </div>
+            @endforeach
+
           </div>
+          <br>
+      </div>
+      @endfor
+
+
+    </div>
+
+  </div>
+
+</div>
+
+
+@endif
+
+
+
+@if ($movie['recommendations']['results'])
+<p>
+  <button class="btn btn-primary w-100 p-2" type="button" data-toggle="collapse" data-target="#movieRecommendations" aria-expanded="false" aria-controls="collapseExample">
+    SIMILAR MOVIES
+  </button>
+</p>
+<div class="collapse" id="movieRecommendations">
+  <div class="row row-cols-1 row-cols-md-5">
+    @foreach (array_slice($movie['recommendations']['results'], 0, 5) as $recommendation)
+    <a href="{{ route('movie', $recommendation['id']) }}">
+      <div class="card" style="width: 18rem;">
+        <img src="https://image.tmdb.org/t/p/original{{$recommendation['poster_path']}}" class="card-img-top actorImg" alt="{{$people['name']}}">
+        <div class="card-body">
+          <h5 class="card-title">{{$recommendation['original_title']}}</h5>
         </div>
       </div>
-      @endforeach
-    </div>
+    </a>
+    @endforeach
   </div>
-  @endif
-  @if ($movie['recommendations']['results'])
-  <p>
-    <button class="btn btn-primary w-100 p-2" type="button" data-toggle="collapse" data-target="#movieRecommendations" aria-expanded="false" aria-controls="collapseExample">
-      SIMILAR MOVIES
-    </button>
-  </p>
-  <div class="collapse" id="movieRecommendations">
-    <div class="row row-cols-1 row-cols-md-5">
-      @foreach (array_slice($movie['recommendations']['results'], 0, 5) as $recommendation)
-      <a href="{{ route('movie', $recommendation['id']) }}">
-        <div class="card" style="width: 18rem;">
-          <img src="https://image.tmdb.org/t/p/original{{$recommendation['poster_path']}}" class="card-img-top actorImg" alt="{{$people['name']}}">
-          <div class="card-body">
-            <h5 class="card-title">{{$recommendation['original_title']}}</h5>
-          </div>
+</div>
+@endif
+@if ($movie['videos']['results'])
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+
+      <div class="modal-body">
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <!-- 16:9 aspect ratio -->
+        <div class="embed-responsive embed-responsive-16by9">
+          <iframe class="embed-responsive-item" src="" id="video" allowscriptaccess="always" allow="autoplay" allowfullscreen></iframe>
         </div>
-      </a>
-      @endforeach
-    </div>
-  </div>
-  @endif
-  @if ($movie['videos']['results'])
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
 
-
-        <div class="modal-body">
-
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <!-- 16:9 aspect ratio -->
-          <div class="embed-responsive embed-responsive-16by9">
-            <iframe class="embed-responsive-item" src="" id="video" allowscriptaccess="always" allow="autoplay" allowfullscreen></iframe>
-          </div>
-
-
-        </div>
 
       </div>
+
     </div>
   </div>
-  @endif
+</div>
+@endif
+
+
 </div>
 
 @endsection

@@ -85,3 +85,12 @@ img {
 /* .card {
     height: 100%;
 } */
+
+.collapse .carousel-indicators li {
+    background-color: #428bca;
+}
+
+.movieCast {
+    font-size: 15px;
+    font-weight: bold;
+}
