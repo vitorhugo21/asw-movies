@@ -25,7 +25,6 @@
               <span class="align-self-center">({{ date('d-m-Y', strtotime($movie['release_date'])) }})</span>
             </div>
             <span class="text-uppercase">{{ $movie['runtime'] }} min | </span>
-
             @if ($movie['genres'])
             @foreach ($movie['genres'] as $key => $genre)
             @if (($key+1) === (count($movie['genres'])))
@@ -80,10 +79,8 @@
               @endif
               <button type="button" class="btn btn-outline-warning text-dark far fa-star moviesBtns {{ $favorite === 1 ? 'active' : '' }}" id="favorite">
                 {{ $favorite === 1 ? ' FAVORITE' : ' FAVORITE ?' }}</button>
-
             </div>
             @endauth
-
           </div>
         </div>
       </div>
@@ -91,52 +88,36 @@
   </div>
 </div>
 
-
-
 <div class="container">
-
-
   <!-- Collapse -->
   @if ($movie['credits']['cast'])
   <p>
-    <button class="btn btn-primary w-100 p-2" type="button" data-toggle="collapse" data-target="#cast" aria-expanded="false" aria-controls="collapseExample">
+    <button class="btn btn-primary w-100 p-2 font-weight-bold" type="button" data-toggle="collapse" data-target="#cast" aria-expanded="false" aria-controls="collapseExample">
       CAST
     </button>
   </p>
-
-
-
   <div class="collapse" id="cast">
-
-    <div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
-
+    <div id="multi-item-example-cast" class="carousel slide carousel-multi-item" data-ride="carousel">
       <!--Controls-->
       <div class="controls-top d-flex justify-content-center">
-        <a class="btn-floating h2 px-2" href="#multi-item-example" data-slide="prev"><i class="fas fa-chevron-circle-left"></i></a>
-        <a class="btn-floating h2 px-2" href="#multi-item-example" data-slide="next"><i class="fa fa-chevron-circle-right"></i></a>
+        <a class="btn-floating h2 px-2" href="#multi-item-example-cast" data-slide="prev"><i class="fas fa-chevron-circle-left"></i></a>
+        <a class="btn-floating h2 px-2" href="#multi-item-example-cast" data-slide="next"><i class="fa fa-chevron-circle-right"></i></a>
       </div>
       <!--/.Controls-->
-
       @php
       $totalCast = count($movie['credits']['cast']);
       $divideCastPerFive = ceil($totalCast / 5);
       @endphp
-
       <!--Indicators-->
       <ol class="carousel-indicators">
-
-        @for ($index = 0; $index < $divideCastPerFive; $index++) <li data-target="#multi-item-example" data-slide-to="{{ $index }}" class="@if($index == 0) active @endif">
+        @for ($index = 0; $index < $divideCastPerFive; $index++) <li data-target="#multi-item-example-cast" data-slide-to="{{ $index }}" class="@if($index == 0) active @endif">
           </li>
           @endfor
       </ol>
       <!--/.Indicators-->
-
       <div class="carousel-inner">
-
         @for ($index = 0; $index < round(($totalCast/10))*10; $index+=5) <div class="carousel-item @if($index === 0) active @endif">
           <div class="row">
-
-
             @foreach (array_slice($movie['credits']['cast'], $index, 5) as $people)
             <div class="col">
               <div class="container">
@@ -158,51 +139,76 @@
               </div>
             </div>
             @endforeach
-
           </div>
           <br>
       </div>
       @endfor
-
-
     </div>
-
   </div>
-
 </div>
-
-
 @endif
-
-
 
 @if ($movie['recommendations']['results'])
 <p>
-  <button class="btn btn-primary w-100 p-2" type="button" data-toggle="collapse" data-target="#movieRecommendations" aria-expanded="false" aria-controls="collapseExample">
+  <button class="btn btn-primary w-100 p-2 font-weight-bold" type="button" data-toggle="collapse" data-target="#movieRecommendations" aria-expanded="false" aria-controls="collapseExample">
     SIMILAR MOVIES
   </button>
 </p>
 <div class="collapse" id="movieRecommendations">
-  <div class="row row-cols-1 row-cols-md-5">
-    @foreach (array_slice($movie['recommendations']['results'], 0, 5) as $recommendation)
-    <a href="{{ route('movie', $recommendation['id']) }}">
-      <div class="card" style="width: 18rem;">
-        <img src="https://image.tmdb.org/t/p/original{{$recommendation['poster_path']}}" class="card-img-top actorImg" alt="{{$people['name']}}">
-        <div class="card-body">
-          <h5 class="card-title">{{$recommendation['original_title']}}</h5>
+  <div id="multi-item-example-similar-movies" class="carousel slide carousel-multi-item" data-ride="carousel">
+    <!--Controls-->
+    <div class="controls-top d-flex justify-content-center">
+      <a class="btn-floating h2 px-2" href="#multi-item-example-similar-movies" data-slide="prev"><i class="fas fa-chevron-circle-left"></i></a>
+      <a class="btn-floating h2 px-2" href="#multi-item-example-similar-movies" data-slide="next"><i class="fa fa-chevron-circle-right"></i></a>
+    </div>
+    <!--/.Controls-->
+    @php
+    $totalMovies = count($movie['recommendations']['results']);
+    $divideMoviesPerFive = ceil($totalMovies / 5);
+    @endphp
+    <!--Indicators-->
+    <ol class="carousel-indicators">
+      @for ($index = 0; $index < $divideMoviesPerFive; $index++) <li data-target="#multi-item-example-similar-movies" data-slide-to="{{ $index }}" class="@if($index == 0) active @endif">
+        </li>
+        @endfor
+    </ol>
+    <!--/.Indicators-->
+    <div class="carousel-inner">
+      @for ($index = 0; $index < round(($totalMovies/10))*10; $index+=5) <div class="carousel-item @if($index === 0) active @endif">
+        <div class="row">
+          @foreach (array_slice($movie['recommendations']['results'], $index, 5) as $recommendation)
+          <div class="col">
+            <div class="container">
+              <div class="d-flex flex-column align-items-center">
+                <a href="{{ route('movie', $recommendation['id']) }}" class="text-decoration-none text-reset">
+                  @if ($recommendation['poster_path'])
+                  <img src="https://image.tmdb.org/t/p/original{{$recommendation['poster_path']}}" class="card-img-top actorImg" alt="{{$recommendation['original_title']}}">
+                  @else
+                  <img src="{{ asset('img/no-image.jpeg') }}" class="card-img-top actorImg" alt="{{$recommendation['original_title']}}">
+                  @endif
+                </a>
+                <br>
+                <a href="{{ route('movie', $recommendation['id']) }}" class="text-decoration-none text-reset">
+                  <h5 class="movieCast">{{$recommendation['original_title']}}</h5>
+                </a>
+              </div>
+            </div>
+          </div>
+          @endforeach
         </div>
-      </div>
-    </a>
-    @endforeach
+        <br>
+    </div>
+    @endfor
   </div>
 </div>
+</div>
 @endif
+
 @if ($movie['videos']['results'])
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-
 
       <div class="modal-body">
 
@@ -214,14 +220,12 @@
           <iframe class="embed-responsive-item" src="" id="video" allowscriptaccess="always" allow="autoplay" allowfullscreen></iframe>
         </div>
 
-
       </div>
 
     </div>
   </div>
 </div>
 @endif
-
 
 </div>
 
