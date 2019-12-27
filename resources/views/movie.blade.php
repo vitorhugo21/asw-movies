@@ -38,7 +38,7 @@
             <h5>DIRECTOR</h5>
             @foreach ($movie['credits']['crew'] as $member)
             @if ($member['job'] === 'Director')
-            <span>{{ $member['name'] }}</span>
+            <a href="{{ route('actor', $member['id']) }}" class="text-decoration-none text-reset btn btn-light"><span>{{ $member['name'] }}</span></a>
             @endif
             @endforeach
             <br><br>
