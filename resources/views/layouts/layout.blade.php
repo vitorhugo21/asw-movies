@@ -32,8 +32,10 @@
                     <li><a href="{{ route('login') }}">LOGIN</a></li>
                     @else
                     <li class="nav-item dropdown">
-
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            @if (auth()->user()->avatar_path)
+                            <img src="{{ asset(auth()->user()->avatar_path) }}" style="width: 30px; height: 30px; border-radius: 50%;">
+                            @endif
                             {{ Auth::user()->username }} <span class="caret"></span>
                         </a>
 

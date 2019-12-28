@@ -12,7 +12,7 @@
 
 
         <div class="col d-flex justify-content-center">
-            <img src="{{ asset('img/default-avatar.png') }}" alt="" srcset="">
+            <img src="{{ asset(Auth::user()->avatar_path) }}" alt="" srcset="">
         </div>
 
         <div class="col">
