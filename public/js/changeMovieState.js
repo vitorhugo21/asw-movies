@@ -16,11 +16,13 @@ function userIsLogged() {
 }
 
 async function changeBtnState() {
-    const movieID = document.getElementById("movieID").value;
+    const path = window.location.pathname;
+    //const movieID = document.getElementById("movieID").value;
     const csrfToken = document
         .getElementsByTagName("meta")[3]
         .getAttribute("content");
-    const url = `http://127.0.0.1:8000/movie/${movieID}/${this.name}`;
+    // const url = `http://localhost/asw-movies/public/movie/${movieID}/${this.name}`;
+    const url = `${path}/${this.name}`; // name of the button
     const settings = {
         method: "POST",
         headers: {
@@ -35,12 +37,15 @@ async function changeBtnState() {
             this.classList.remove("active");
             switch (this.name) {
                 case "favorite":
-                    this.innerHTML = " MARK AS FAVORITE";
+                    this.innerHTML = " FAVORITE ?";
                     break;
                 case "viewed":
                     this.innerHTML = " WATCHED?";
                     document.getElementById("seeLater").style.display =
                         "inline-block";
+                    break;
+                case "watch_later":
+                    this.innerHTML = " SEE LATER ?";
                     break;
             }
         } else {
@@ -52,6 +57,9 @@ async function changeBtnState() {
                 case "viewed":
                     this.innerHTML = " WATCHED";
                     document.getElementById("seeLater").style.display = "none";
+                    break;
+                case "watch_later":
+                    this.innerHTML = " SEE LATER";
                     break;
             }
         }
