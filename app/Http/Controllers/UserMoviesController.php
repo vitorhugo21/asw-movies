@@ -38,6 +38,7 @@ class UserMoviesController extends Controller
         $movieList['watchLater'] = $this->getMovieList($user->movies()->where('watch_later', 1)->get());
         $movieList['viewed'] = $this->getMovieList($user->movies()->where('viewed', 1)->get());
         //return $movieList;
+
         return view('user-profile', [
             'movies' => $movieList
         ]);
@@ -63,35 +64,35 @@ class UserMoviesController extends Controller
             'profile_image'     =>  'image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
-         // Get current user
-         $user = User::findOrFail(Auth::user()->id);
-      
-        if ($request->has('userEmail') && !empty($request->input('userEmail') )) {
+        // Get current user
+        $user = User::findOrFail(Auth::user()->id);
+
+        if ($request->has('userEmail') && !empty($request->input('userEmail'))) {
             $user->email = $request->input('userEmail');
         }
 
-        if ($request->has('userPassword') && !empty($request->input('userPassword') )) {
+        if ($request->has('userPassword') && !empty($request->input('userPassword'))) {
             $user->password = Hash::make($request->input('userPassword'));
         }
 
-         // Check if a profile image has been uploaded
-         if ($request->has('profile_image')) {
+        // Check if a profile image has been uploaded
+        if ($request->has('profile_image')) {
             // Get image file
             $image = $request->file('profile_image');
             // Make a image name based on user name and current timestamp
-            $name = Str::slug($user->name).'_'.time();
+            $name = Str::slug($user->name) . '_' . time();
             // Define folder path
             $folder = '/uploads/images/';
             // Make a file path where image will be stored [ folder path + file name + file extension]
-            $filePath = $folder . $name. '.' . $image->getClientOriginalExtension();
-           
-            $file = $image->storeAs($folder, $name.'.'.$image->getClientOriginalExtension(), 'public');
+            $filePath = $folder . $name . '.' . $image->getClientOriginalExtension();
+
+            $file = $image->storeAs($folder, $name . '.' . $image->getClientOriginalExtension(), 'public');
 
             // Set user profile image path in database to filePath
             $user->avatar_path = $filePath;
         }
-       
-  
+
+
         // Persist user record to database
         $user->save();
 
