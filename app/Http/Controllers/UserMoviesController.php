@@ -59,6 +59,10 @@ class UserMoviesController extends Controller
     public function updateProfile(Request $request)
     {
 
+        $request->validate([
+            'profile_image'     =>  'image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+
          // Get current user
          $user = User::findOrFail(Auth::user()->id);
       
@@ -68,6 +72,23 @@ class UserMoviesController extends Controller
 
         if ($request->has('userPassword') && !empty($request->input('userPassword') )) {
             $user->password = Hash::make($request->input('userPassword'));
+        }
+
+         // Check if a profile image has been uploaded
+         if ($request->has('profile_image')) {
+            // Get image file
+            $image = $request->file('profile_image');
+            // Make a image name based on user name and current timestamp
+            $name = Str::slug($user->name).'_'.time();
+            // Define folder path
+            $folder = '/uploads/images/';
+            // Make a file path where image will be stored [ folder path + file name + file extension]
+            $filePath = $folder . $name. '.' . $image->getClientOriginalExtension();
+           
+            $file = $image->storeAs($folder, $name.'.'.$image->getClientOriginalExtension(), 'public');
+
+            // Set user profile image path in database to filePath
+            $user->avatar_path = $filePath;
         }
        
   
