@@ -75,18 +75,21 @@
     @if ($movies['favorites'] !== 0)
     <div class="row">
         <div class="col">
+
             <div class="card">
                 <div class="card-body">
                     <h4>Favorite</h4>
                     <div class="container-fluid py-2">
                         <div class="d-flex flex-row flex-nowrap overflow-auto">
                             @foreach ($movies['favorites'] as $favorite)
-                            <div class="pmcard card card-body">
-                                <span> {{$favorite['original_title']}} </span>
-                                <img class="d-block w-100"
-                                    src="https://image.tmdb.org/t/p/original{{$favorite['backdrop_path']}}" alt=""
-                                    srcset="">
-                            </div>
+                            <a href='{{ route('movie', $favorite['id']) }}'>
+                                <div class="pmcard card card-body">
+                                    <span> {{$favorite['original_title']}} </span>
+                                    <img class="d-block w-100"
+                                        src="https://image.tmdb.org/t/p/original{{$favorite['backdrop_path']}}" alt=""
+                                        srcset="">
+                                </div>
+                            </a>
                             @endforeach
                         </div>
                     </div>
@@ -104,12 +107,14 @@
                     <div class="container-fluid py-2">
                         <div class="d-flex flex-row flex-nowrap overflow-auto">
                             @foreach ($movies['watchLater'] as $watch)
-                            <div class="pmcard card card-body">
-                                <span> {{$watch['original_title']}} </span>
-                                <img class="d-block w-100"
-                                    src="https://image.tmdb.org/t/p/original{{$watch['backdrop_path']}}" alt=""
-                                    srcset="">
-                            </div>
+                            <a href='{{ route('movie', $watch['id']) }}'>
+                                <div class="pmcard card card-body">
+                                    <span> {{$watch['original_title']}} </span>
+                                    <img class="d-block w-100"
+                                        src="https://image.tmdb.org/t/p/original{{$watch['backdrop_path']}}" alt=""
+                                        srcset="">
+                                </div>
+                            </a>
                             @endforeach
                         </div>
                     </div>
@@ -127,12 +132,14 @@
                     <div class="container-fluid py-2">
                         <div class="d-flex flex-row flex-nowrap overflow-auto">
                             @foreach ($movies['viewed'] as $watched)
-                            <div class="pmcard card card-body">
-                                <span> {{$watched['original_title']}} </span>
-                                <img class="d-block w-100"
-                                    src="https://image.tmdb.org/t/p/original{{$watched['backdrop_path']}}" alt=""
-                                    srcset="">
-                            </div>
+                            <a href='{{ route('movie', $watched['id']) }}'>
+                                <div class="pmcard card card-body">
+                                    <span> {{$watched['original_title']}} </span>
+                                    <img class="d-block w-100"
+                                        src="https://image.tmdb.org/t/p/original{{$watched['backdrop_path']}}" alt=""
+                                        srcset="">
+                                </div>
+                            </a>
                             @endforeach
                         </div>
                     </div>
