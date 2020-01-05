@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Classes\TheMovieDBClass;
-
+use App\User;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 class UserMoviesController extends Controller
 {
@@ -52,5 +54,27 @@ class UserMoviesController extends Controller
         } else {
             return 0;
         }
+    }
+
+    public function updateProfile(Request $request)
+    {
+
+         // Get current user
+         $user = User::findOrFail(Auth::user()->id);
+      
+        if ($request->has('userEmail') && !empty($request->input('userEmail') )) {
+            $user->email = $request->input('userEmail');
+        }
+
+        if ($request->has('userPassword') && !empty($request->input('userPassword') )) {
+            $user->password = Hash::make($request->input('userPassword'));
+        }
+       
+  
+        // Persist user record to database
+        $user->save();
+
+        // Return user back and show a flash message
+        return redirect()->back()->with(['status' => 'Profile updated successfully.']);
     }
 }

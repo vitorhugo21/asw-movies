@@ -32,6 +32,7 @@ Route::get('/discover', 'MovieController@discover')->name('discover');
 
 
 Route::get('/user/profile', 'UserMoviesController@index')->name('user');
+Route::post('/user/profile/update', 'UserMoviesController@updateProfile')->name('user.update');
 
 
 Auth::routes();

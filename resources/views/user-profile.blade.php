@@ -20,12 +20,51 @@
             <div class="card">
 
                 <div class="card-body">
-                    <h4>Name: {{Auth::user()->name}}</h4>
-                    <h4>Username: {{Auth::user()->username}}</h4>
-                    <h4>Email: {{Auth::user()->email}}</h4>
-                    <p><a href="">Change my email</a></p>
-                    <h4>Password: *****</h4>
-                    <p><a href="">Change my password</a></p>
+                    <form action="{{ route('user.update') }}" method="POST" role="form" enctype="multipart/form-data">
+                        @csrf
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Name</span>
+                            </div>
+                            <input type="text" class="form-control" name="userName" value=" {{Auth::user()->name}}"
+                                disabled>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Username</span>
+                            </div>
+                            <input type="text" class="form-control" name="userUsername"
+                                value=" {{Auth::user()->username}}" disabled>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Email</span>
+                            </div>
+                            <input type="text" class="form-control" name="userEmail" value="{{Auth::user()->email}}">
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Password</span>
+                            </div>
+                            <input type="password" placeholder="*****" class="form-control" name="userPassword">
+                        </div>
+                        <div class="form-group row">
+                            <label for="profile_image" class="col-md-4 col-form-label text-md-right">Profile
+                                Image</label>
+                            <div class="col-md-6">
+                                <input id="profile_image" type="file" class="form-control" name="profile_image">
+                                @if (auth()->user()->image)
+                                <code>{{ auth()->user()->image }}</code>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row mb-0 mt-5">
+                            <div class="col-md-8 offset-md-4">
+                                <button type="submit" class="btn btn-primary">Update Profile</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
 
             </div>
@@ -44,7 +83,9 @@
                             @foreach ($movies['favorites'] as $favorite)
                             <div class="pmcard card card-body">
                                 <span> {{$favorite['original_title']}} </span>
-                                <img class="d-block w-100" src="https://image.tmdb.org/t/p/original{{$favorite['backdrop_path']}}" alt="" srcset="">
+                                <img class="d-block w-100"
+                                    src="https://image.tmdb.org/t/p/original{{$favorite['backdrop_path']}}" alt=""
+                                    srcset="">
                             </div>
                             @endforeach
                         </div>
@@ -65,7 +106,9 @@
                             @foreach ($movies['watchLater'] as $watch)
                             <div class="pmcard card card-body">
                                 <span> {{$watch['original_title']}} </span>
-                                <img class="d-block w-100" src="https://image.tmdb.org/t/p/original{{$watch['backdrop_path']}}" alt="" srcset="">
+                                <img class="d-block w-100"
+                                    src="https://image.tmdb.org/t/p/original{{$watch['backdrop_path']}}" alt=""
+                                    srcset="">
                             </div>
                             @endforeach
                         </div>
@@ -86,7 +129,9 @@
                             @foreach ($movies['viewed'] as $watched)
                             <div class="pmcard card card-body">
                                 <span> {{$watched['original_title']}} </span>
-                                <img class="d-block w-100" src="https://image.tmdb.org/t/p/original{{$watched['backdrop_path']}}" alt="" srcset="">
+                                <img class="d-block w-100"
+                                    src="https://image.tmdb.org/t/p/original{{$watched['backdrop_path']}}" alt=""
+                                    srcset="">
                             </div>
                             @endforeach
                         </div>
@@ -97,4 +142,5 @@
     </div>
     @endif
 </div>
+
 @endsection
