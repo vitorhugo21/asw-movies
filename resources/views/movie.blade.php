@@ -97,6 +97,9 @@
     </button>
   </p>
   <div class="collapse" id="cast">
+
+    @if (count($movie['credits']['cast']) > 5)
+
     <div id="multi-item-example-cast" class="carousel slide carousel-multi-item" data-ride="carousel">
       <!--Controls-->
       <div class="controls-top d-flex justify-content-center">
@@ -145,8 +148,35 @@
       @endfor
     </div>
   </div>
+  @else
+  <div class="row">
+    @foreach ($movie['credits']['cast'] as $people)
+    <div class="col">
+      <div class="container">
+        <div class="d-flex flex-column align-items-center">
+          <a href="{{ route('actor', $people['id']) }}" class="text-decoration-none text-reset">
+            @if ($people['profile_path'])
+            <img src="https://image.tmdb.org/t/p/original{{$people['profile_path']}}" class="card-img-top actorImg" alt="{{$people['name']}}">
+            @else
+            <img src="{{ asset('img/no-image.jpeg') }}" class="card-img-top actorImg" alt="{{$people['name']}}">
+            @endif
+          </a>
+          <br>
+          <div class="">
+            <a href="{{ route('actor', $people['id']) }}" class="text-decoration-none text-reset">
+              <h5 class="movieCast">{{$people['name']}}</h5>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    @endforeach
+  </div>
+  @endif
 </div>
 @endif
+
+
 
 @if ($movie['recommendations']['results'])
 <p>
@@ -154,7 +184,11 @@
     SIMILAR MOVIES
   </button>
 </p>
+
 <div class="collapse" id="movieRecommendations">
+
+  @if (count($movie['recommendations']['results']) > 5)
+
   <div id="multi-item-example-similar-movies" class="carousel slide carousel-multi-item" data-ride="carousel">
     <!--Controls-->
     <div class="controls-top d-flex justify-content-center">
@@ -201,6 +235,29 @@
     @endfor
   </div>
 </div>
+@else
+<div class="row">
+  @foreach ($movie['recommendations']['results'] as $recommendation)
+  <div class="col">
+    <div class="container">
+      <div class="d-flex flex-column align-items-center">
+        <a href="{{ route('movie', $recommendation['id']) }}" class="text-decoration-none text-reset">
+          @if ($recommendation['poster_path'])
+          <img src="https://image.tmdb.org/t/p/original{{$recommendation['poster_path']}}" class="card-img-top actorImg" alt="{{$recommendation['original_title']}}">
+          @else
+          <img src="{{ asset('img/no-image.jpeg') }}" class="card-img-top actorImg" alt="{{$recommendation['original_title']}}">
+          @endif
+        </a>
+        <br>
+        <a href="{{ route('movie', $recommendation['id']) }}" class="text-decoration-none text-reset">
+          <h5 class="movieCast">{{$recommendation['original_title']}}</h5>
+        </a>
+      </div>
+    </div>
+  </div>
+  @endforeach
+</div>
+@endif
 </div>
 @endif
 
