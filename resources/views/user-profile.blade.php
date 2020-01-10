@@ -177,7 +177,7 @@
 <div class="mb-3">
     <button class="btn btn-primary w-100 p-2 font-weight-bold" type="button" data-toggle="collapse"
         data-target="#watchLaterMovies" aria-expanded="false" aria-controls="collapseExample">
-        WATCH LATER
+        SEE LATER
     </button>
 </div>
 
@@ -269,7 +269,7 @@
 <div class="mb-3">
     <button class="btn btn-primary w-100 p-2 font-weight-bold" type="button" data-toggle="collapse"
         data-target="#viewedMovies" aria-expanded="false" aria-controls="collapseExample">
-        VIEWED
+        WATCHED
     </button>
 </div>
 
