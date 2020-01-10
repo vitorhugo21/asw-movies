@@ -19,8 +19,11 @@ class ActorController extends Controller
         $infoActor = $this->movie_class->getInfoActor($actor);
         if (array_key_exists('status_code', $infoActor)) {
             abort(404, 'ACTOR NOT FOUND');
-        }
+        } 
+        
 
-        return $infoActor;
+        return view('actor',[
+            'actor' => $infoActor
+        ]);
     }
 }
