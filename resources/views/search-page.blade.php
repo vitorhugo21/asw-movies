@@ -6,87 +6,124 @@
 <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
 @endsection
 
-
 @section('content')
+
 <div class="container">
-    <div class="row">
+    @if ($result['moviesResults'] and $result['actorsResults'])
+
+    <div class="row justify-content-md-center">
         <div class="col-4">
-            <div class="list-group" id="list-tab" role="tablist">
+            <div class="list-group flex-sm-row" id="list-tab" role="tablist">
                 <a class="list-group-item list-group-item-action active d-flex justify-content-between" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">
                     <span>Movies</span>
-                    @if ($result['moviesResults'])
                     <span class="badge badge-dark badge-pill align-self-center">{{ count($result['moviesResults']['results']) }}</span>
-                    @else
-                    <span class="badge badge-dark badge-pill align-self-center">0</span>
-                    @endif
                 </a>
                 <a class="list-group-item list-group-item-action d-flex justify-content-between" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">
                     <span>People</span>
-                    @if ($result['actorsResults'])
                     <span class="badge badge-dark badge-pill align-self-center">{{ count($result['actorsResults']['results']) }}</span>
-                    @else
-                    <span class="badge badge-dark badge-pill align-self-center">0</span>
-                    @endif
                 </a>
             </div>
         </div>
-        <div class="col-8">
-            <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
-                    @if ($result['moviesResults'])
-                    @foreach ($result['moviesResults']['results'] as $movie)
+    </div>
+    <br>
+
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+            <div class="d-flex justify-content-center flex-wrap">
+                @foreach ($result['moviesResults']['results'] as $movie)
+
+                <div class="mx-2 my-2 border-0" style="width: 10rem;">
                     <a href="{{ route('movie', $movie['id']) }}" class="text-decoration-none text-reset">
-                        <div class="card border-0 mb-3" style="max-width: 540px;">
-                            <div class="row no-gutters">
-                                <div class="col-md-4">
-                                    @if ($movie['poster_path'])
-                                    <img src="https://image.tmdb.org/t/p/original{{$movie['poster_path']}}" class="card-img" alt="{{ $movie['original_title'] }}">
-                                    @else
-                                    <img src="{{ asset('img/no-image.jpeg') }}" class="card-img" alt="{{ $movie['original_title'] }}">
-                                    @endif
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{ $movie['original_title'] }}</h5>
-                                        <p class="card-text">{{ $movie['overview'] }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @if ($movie['poster_path'])
+                        <img src="https://image.tmdb.org/t/p/original{{$movie['poster_path']}}" class="card-img-top img-fluid h-75" alt="{{ $movie['original_title'] }}">
+                        @else
+                        <img src="{{ asset('img/no-image.jpeg') }}" class="card-img-top img-fluid" alt="{{ $movie['original_title'] }}">
+                        @endif
                     </a>
-                    @endforeach
-                    @else
-                    <span>NO RESULTS!</span>
-                    @endif
+                    <div class="p-0 mt-2">
+                        <a href="{{ route('movie', $movie['id']) }}" class="text-decoration-none text-reset">
+                            <h5 class="h6 text-center font-weight-bold">{{ $movie['original_title'] }}</h5>
+                        </a>
+                    </div>
                 </div>
-                <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
-                    @if ($result['actorsResults'])
-                    @foreach ($result['actorsResults']['results'] as $person)
-                    <a href="{{ route('actor', $person['id']) }}" class="text-decoration-none text-reset">
-                        <div class="card border-0 mb-3" style="max-width: 540px;">
-                            <div class="row no-gutters">
-                                <div class="col-md-4">
-                                    @if ($person['profile_path'])
-                                    <img src="https://image.tmdb.org/t/p/original{{$person['profile_path']}}" class="card-img" alt="{{ $person['name'] }}">
-                                    @else
-                                    <img src="{{ asset('img/no-image.jpeg') }}" class="card-img" alt="{{ $movie['original_title'] }}">
-                                    @endif
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{ $person['name'] }}</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    @endforeach
-                    @else
-                    <span>NO RESULTS!</span>
-                    @endif
-                </div>
+
+                @endforeach
             </div>
         </div>
-    </div>
-</div>
-@endsection
+        <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+            <div class="d-flex justify-content-center flex-wrap">
+                @foreach ($result['actorsResults']['results'] as $person)
+
+                <div class="mx-2 my-2 border-0" style="width: 10rem;">
+                    <a href="{{ route('actor', $person['id']) }}" class="text-decoration-none text-reset">
+                        @if ($person['profile_path'])
+                        <img src="https://image.tmdb.org/t/p/original{{$person['profile_path']}}" class="card-img-top img-fluid h-75" alt="{{$person['profile_path']}}">
+                        @else
+                        <img src="{{ asset('img/no-image.jpeg') }}" class="card-img-top img-fluid" alt="{{$person['profile_path']}}">
+                        @endif
+                    </a>
+                    <div class="p-0 mt-2">
+                        <a href="{{ route('actor', $person['id']) }}" class="text-decoration-none text-reset">
+                            <h5 class="h6 text-center font-weight-bold">{{ $person['name'] }}</h5>
+                        </a>
+                    </div>
+                </div>
+
+                @endforeach
+            </div>
+        </div>
+
+        @elseif($result['moviesResults'] and !$result['actorsResults'])
+
+        <div class="d-flex justify-content-center flex-wrap">
+            @foreach ($result['moviesResults']['results'] as $movie)
+
+            <div class="mx-2 my-2 border-0" style="width: 10rem;">
+                <a href="{{ route('movie', $movie['id']) }}" class="text-decoration-none text-reset">
+                    @if ($movie['poster_path'])
+                    <img src="https://image.tmdb.org/t/p/original{{$movie['poster_path']}}" class="card-img-top img-fluid h-75" alt="{{ $movie['original_title'] }}">
+                    @else
+                    <img src="{{ asset('img/no-image.jpeg') }}" class="card-img-top img-fluid" alt="{{ $movie['original_title'] }}">
+                    @endif
+                </a>
+                <div class="p-0 mt-2">
+                    <a href="{{ route('movie', $movie['id']) }}" class="text-decoration-none text-reset">
+                        <h5 class="h6 text-center font-weight-bold">{{ $movie['original_title'] }}</h5>
+                    </a>
+                </div>
+            </div>
+
+            @endforeach
+        </div>
+
+        @elseif(!$result['moviesResults'] and $result['actorsResults'])
+
+
+        <div class="d-flex justify-content-center flex-wrap">
+            @foreach ($result['actorsResults']['results'] as $person)
+
+            <div class="mx-2 my-2 border-0" style="width: 10rem;">
+                <a href="{{ route('actor', $person['id']) }}" class="text-decoration-none text-reset">
+                    @if ($person['profile_path'])
+                    <img src="https://image.tmdb.org/t/p/original{{$person['profile_path']}}" class="card-img-top img-fluid h-75" alt="{{$person['profile_path']}}">
+                    @else
+                    <img src="{{ asset('img/no-image.jpeg') }}" class="card-img-top img-fluid" alt="{{$person['profile_path']}}">
+                    @endif
+                </a>
+                <div class="p-0 mt-2">
+                    <a href="{{ route('actor', $person['id']) }}" class="text-decoration-none text-reset">
+                        <h5 class="h6 text-center font-weight-bold">{{ $person['name'] }}</h5>
+                    </a>
+                </div>
+            </div>
+
+            @endforeach
+
+            @else
+            <h1 class="text-center">No Results!</h1>
+            @endif
+        </div>
+
+
+
+        @endsection

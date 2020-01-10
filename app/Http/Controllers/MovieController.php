@@ -142,7 +142,7 @@ class MovieController extends Controller
 
         //return $searchArray;
 
-        return view('new-search', [
+        return view('search-page', [
             'result' => $searchArray
         ]);
 
