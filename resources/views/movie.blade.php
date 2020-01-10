@@ -67,7 +67,10 @@
             @endphp
             <input type="hidden" value="{{$movie['id']}}" id="movieID">
             <div>
-              @if ($viewed === 1)
+              @if ($viewed === 1 and $watchLater === 1)
+              <button type="button" class="btn btn-outline-primary text-dark active fas fa-eye moviesBtns" id="watch"> WATCHED</button>
+              <button type="button" class="btn btn-outline-info text-dark active far fa-check-circle moviesBtns" id="seeLater" style="display: none"> SEE LATER ?</button>
+              @elseif ($viewed === 1)
               <button type="button" class="btn btn-outline-primary text-dark active fas fa-eye moviesBtns" id="watch"> WATCHED</button>
               <button type="button" class="btn btn-outline-info text-dark far fa-check-circle moviesBtns" id="seeLater" style="display: none"> SEE LATER ?</button>
               @elseif ($watchLater === 1)

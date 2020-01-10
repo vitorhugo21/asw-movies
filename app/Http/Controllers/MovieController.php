@@ -112,10 +112,10 @@ class MovieController extends Controller
                 $searchArray['moviesResults']['results'] =
                     $this->getAllPages($resultsSearchMovie, $sentence, $movies);
                 $searchArray['moviesResults']['results'] =
-                    $this->sortByPopularity($searchArray['moviesResults']['results']);
+                    $this->sortByPopularity($searchArray['moviesResults']['results'], $movies);
             } else {
                 $searchArray['moviesResults']['results'] =
-                    $this->sortByPopularity($searchArray['moviesResults']['results']);
+                    $this->sortByPopularity($searchArray['moviesResults']['results'], $movies);
             }
         } else {
             $searchArray['moviesResults'] = 0;
@@ -129,10 +129,10 @@ class MovieController extends Controller
                 $searchArray['actorsResults']['results'] =
                     $this->getAllPages($resultsSearchActor, $sentence, $actors);
                 $searchArray['actorsResults']['results'] =
-                    $this->sortByPopularity($searchArray['actorsResults']['results']);
+                    $this->sortByPopularity($searchArray['actorsResults']['results'], $actors);
             } else {
                 $searchArray['actorsResults']['results'] =
-                    $this->sortByPopularity($searchArray['actorsResults']['results']);
+                    $this->sortByPopularity($searchArray['actorsResults']['results'], $actors);
             }
             $searchArray['actorsResults']['results'] = $this->removeFakeActors($searchArray['actorsResults']['results']);
         } else {
@@ -142,7 +142,7 @@ class MovieController extends Controller
 
         //return $searchArray;
 
-        return view('new-search', [
+        return view('search-page', [
             'result' => $searchArray
         ]);
 
@@ -202,19 +202,20 @@ class MovieController extends Controller
         return $arrayMovieOrActor['results'];
     }
 
-    private function sortByPopularity($results)
+    private function sortByPopularity($results, $moviesOrActors)
     {
         usort($results, function ($a, $b) {
             return $b['popularity'] <=> $a['popularity'];
         });
 
+        if ($moviesOrActors === 0 and count($results) > 100) {
+            return array_slice($results, 0, 100);
+        }
         return $results;
-        //return array_slice($results, 0, 20);
     }
 
     private function removeFakeActors($actorsArray)
     {
-
         for ($index = 0; $index < count($actorsArray); $index++) {
             if (!$this->confirmEmptyResult($actorsArray[$index]['known_for'])) {
                 unset($actorsArray[$index]);

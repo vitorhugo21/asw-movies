@@ -35,7 +35,14 @@ class UserMoviesController extends Controller
         $user = Auth::user();
 
         $movieList['favorites'] = $this->getMovieList($user->movies()->where('favorite', 1)->get());
-        $movieList['watchLater'] = $this->getMovieList($user->movies()->where('watch_later', 1)->get());
+        $movieList['watchLater'] = $this->getMovieList(
+            $user->movies()
+                ->where([
+                    ['watch_later', 1],
+                    ['viewed', 0],
+                ])
+                ->get()
+        );
         $movieList['viewed'] = $this->getMovieList($user->movies()->where('viewed', 1)->get());
         //return $movieList;
 
