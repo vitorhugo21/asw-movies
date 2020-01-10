@@ -12,8 +12,7 @@
 
 
         <div class="col d-flex justify-content-center">
-            <img src="{{ asset(Auth::user()->avatar_path) }}" class="rounded-circle"
-                style="width: 300px; height: 300px; object-fit: contains" alt="" srcset="">
+            <img src="{{ asset(Auth::user()->avatar_path) }}" class="rounded-circle" style="width: 300px; height: 300px; object-fit: contains" alt="" srcset="">
         </div>
 
         <div class="col">
@@ -27,15 +26,13 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">Name</span>
                             </div>
-                            <input type="text" class="form-control" name="userName" value=" {{Auth::user()->name}}"
-                                disabled>
+                            <input type="text" class="form-control" name="userName" value=" {{Auth::user()->name}}" disabled>
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">Username</span>
                             </div>
-                            <input type="text" class="form-control" name="userUsername"
-                                value=" {{Auth::user()->username}}" disabled>
+                            <input type="text" class="form-control" name="userUsername" value=" {{Auth::user()->username}}" disabled>
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -48,7 +45,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">Password</span>
                             </div>
-                            <input type="password" placeholder="*****" class="form-control" name="userPassword">
+                            <input type="password" placeholder="8 caracteres" class="form-control" name="userPassword" pattern=".{8,}">
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -80,8 +77,7 @@
     <!-- Start favorite section-->
     @if ($movies['favorites'])
     <div class="mb-3">
-        <button class="btn btn-primary w-100 p-2 font-weight-bold" type="button" data-toggle="collapse"
-            data-target="#favoritesMovies" aria-expanded="false" aria-controls="collapseExample">
+        <button class="btn btn-primary w-100 p-2 font-weight-bold" type="button" data-toggle="collapse" data-target="#favoritesMovies" aria-expanded="false" aria-controls="collapseExample">
             FAVORITES
         </button>
     </div>
@@ -91,10 +87,8 @@
         <div id="multi-item-example-favorite-movies" class="carousel slide carousel-multi-item" data-ride="carousel">
             <!--Controls-->
             <div class="controls-top d-flex justify-content-center">
-                <a class="btn-floating h2 px-2" href="#multi-item-example-favorite-movies" data-slide="prev"><i
-                        class="fas fa-chevron-circle-left"></i></a>
-                <a class="btn-floating h2 px-2" href="#multi-item-example-favorite-movies" data-slide="next"><i
-                        class="fa fa-chevron-circle-right"></i></a>
+                <a class="btn-floating h2 px-2" href="#multi-item-example-favorite-movies" data-slide="prev"><i class="fas fa-chevron-circle-left"></i></a>
+                <a class="btn-floating h2 px-2" href="#multi-item-example-favorite-movies" data-slide="next"><i class="fa fa-chevron-circle-right"></i></a>
             </div>
             <!--/.Controls-->
             @php
@@ -102,34 +96,27 @@
             $divideMoviesPerFive = ceil($totalMovies / 5);
             @endphp
             <ol class="carousel-indicators">
-                @for ($index = 0; $index < $divideMoviesPerFive; $index++) <li
-                    data-target="#multi-item-example-similar-movies" data-slide-to="{{ $index }}"
-                    class="@if($index == 0) active @endif">
+                @for ($index = 0; $index < $divideMoviesPerFive; $index++) <li data-target="#multi-item-example-similar-movies" data-slide-to="{{ $index }}" class="@if($index == 0) active @endif">
                     </li>
                     @endfor
             </ol>
             <!--/.Indicators-->
             <div class="carousel-inner">
-                @for ($index = 0; $index < round(($totalMovies/10))*10; $index+=5) <div
-                    class="carousel-item @if($index === 0) active @endif">
+                @for ($index = 0; $index < round(($totalMovies/10))*10; $index+=5) <div class="carousel-item @if($index === 0) active @endif">
                     <div class="row">
                         @foreach (array_slice($movies['favorites'], $index, 5) as $movie)
                         <div class="col">
                             <div class="container">
                                 <div class="d-flex flex-column align-items-center">
-                                    <a href="{{ route('movie', $movie['id']) }}"
-                                        class="text-decoration-none text-reset">
+                                    <a href="{{ route('movie', $movie['id']) }}" class="text-decoration-none text-reset">
                                         @if ($movie['poster_path'])
-                                        <img src="https://image.tmdb.org/t/p/original{{$movie['poster_path']}}"
-                                            class="card-img-top actorImg" alt="{{$movie['original_title']}}">
+                                        <img src="https://image.tmdb.org/t/p/original{{$movie['poster_path']}}" class="card-img-top actorImg" alt="{{$movie['original_title']}}">
                                         @else
-                                        <img src="{{ asset('img/no-image.jpeg') }}" class="card-img-top actorImg"
-                                            alt="{{$movie['original_title']}}">
+                                        <img src="{{ asset('img/no-image.jpeg') }}" class="card-img-top actorImg" alt="{{$movie['original_title']}}">
                                         @endif
                                     </a>
                                     <br>
-                                    <a href="{{ route('movie', $movie['id']) }}"
-                                        class="text-decoration-none text-reset">
+                                    <a href="{{ route('movie', $movie['id']) }}" class="text-decoration-none text-reset">
                                         <h5 class="movieCast">{{$movie['original_title']}}</h5>
                                     </a>
                                 </div>
@@ -149,11 +136,9 @@
                 <div class="d-flex flex-column align-items-center">
                     <a href="{{ route('movie', $movie['id']) }}" class="text-decoration-none text-reset">
                         @if ($movie['poster_path'])
-                        <img src="https://image.tmdb.org/t/p/original{{$movie['poster_path']}}"
-                            class="card-img-top actorImg" alt="{{$movie['original_title']}}">
+                        <img src="https://image.tmdb.org/t/p/original{{$movie['poster_path']}}" class="card-img-top actorImg" alt="{{$movie['original_title']}}">
                         @else
-                        <img src="{{ asset('img/no-image.jpeg') }}" class="card-img-top actorImg"
-                            alt="{{$movie['original_title']}}">
+                        <img src="{{ asset('img/no-image.jpeg') }}" class="card-img-top actorImg" alt="{{$movie['original_title']}}">
                         @endif
                     </a>
                     <br>
@@ -175,8 +160,7 @@
 <!-- Start watchLater section-->
 @if ($movies['watchLater'])
 <div class="mb-3">
-    <button class="btn btn-primary w-100 p-2 font-weight-bold" type="button" data-toggle="collapse"
-        data-target="#watchLaterMovies" aria-expanded="false" aria-controls="collapseExample">
+    <button class="btn btn-primary w-100 p-2 font-weight-bold" type="button" data-toggle="collapse" data-target="#watchLaterMovies" aria-expanded="false" aria-controls="collapseExample">
         SEE LATER
     </button>
 </div>
@@ -186,10 +170,8 @@
     <div id="multi-item-example-favorite-movies" class="carousel slide carousel-multi-item" data-ride="carousel">
         <!--Controls-->
         <div class="controls-top d-flex justify-content-center">
-            <a class="btn-floating h2 px-2" href="#multi-item-example-favorite-movies" data-slide="prev"><i
-                    class="fas fa-chevron-circle-left"></i></a>
-            <a class="btn-floating h2 px-2" href="#multi-item-example-favorite-movies" data-slide="next"><i
-                    class="fa fa-chevron-circle-right"></i></a>
+            <a class="btn-floating h2 px-2" href="#multi-item-example-favorite-movies" data-slide="prev"><i class="fas fa-chevron-circle-left"></i></a>
+            <a class="btn-floating h2 px-2" href="#multi-item-example-favorite-movies" data-slide="next"><i class="fa fa-chevron-circle-right"></i></a>
         </div>
         <!--/.Controls-->
         @php
@@ -197,16 +179,13 @@
         $divideMoviesPerFive = ceil($totalMovies / 5);
         @endphp
         <ol class="carousel-indicators">
-            @for ($index = 0; $index < $divideMoviesPerFive; $index++) <li
-                data-target="#multi-item-example-similar-movies" data-slide-to="{{ $index }}"
-                class="@if($index == 0) active @endif">
+            @for ($index = 0; $index < $divideMoviesPerFive; $index++) <li data-target="#multi-item-example-similar-movies" data-slide-to="{{ $index }}" class="@if($index == 0) active @endif">
                 </li>
                 @endfor
         </ol>
         <!--/.Indicators-->
         <div class="carousel-inner">
-            @for ($index = 0; $index < round(($totalMovies/10))*10; $index+=5) <div
-                class="carousel-item @if($index === 0) active @endif">
+            @for ($index = 0; $index < round(($totalMovies/10))*10; $index+=5) <div class="carousel-item @if($index === 0) active @endif">
                 <div class="row">
                     @foreach (array_slice($movies['watchLater'], $index, 5) as $movie)
                     <div class="col">
@@ -214,11 +193,9 @@
                             <div class="d-flex flex-column align-items-center">
                                 <a href="{{ route('movie', $movie['id']) }}" class="text-decoration-none text-reset">
                                     @if ($movie['poster_path'])
-                                    <img src="https://image.tmdb.org/t/p/original{{$movie['poster_path']}}"
-                                        class="card-img-top actorImg" alt="{{$movie['original_title']}}">
+                                    <img src="https://image.tmdb.org/t/p/original{{$movie['poster_path']}}" class="card-img-top actorImg" alt="{{$movie['original_title']}}">
                                     @else
-                                    <img src="{{ asset('img/no-image.jpeg') }}" class="card-img-top actorImg"
-                                        alt="{{$movie['original_title']}}">
+                                    <img src="{{ asset('img/no-image.jpeg') }}" class="card-img-top actorImg" alt="{{$movie['original_title']}}">
                                     @endif
                                 </a>
                                 <br>
@@ -242,11 +219,9 @@
             <div class="d-flex flex-column align-items-center">
                 <a href="{{ route('movie', $movie['id']) }}" class="text-decoration-none text-reset">
                     @if ($movie['poster_path'])
-                    <img src="https://image.tmdb.org/t/p/original{{$movie['poster_path']}}"
-                        class="card-img-top actorImg" alt="{{$movie['original_title']}}">
+                    <img src="https://image.tmdb.org/t/p/original{{$movie['poster_path']}}" class="card-img-top actorImg" alt="{{$movie['original_title']}}">
                     @else
-                    <img src="{{ asset('img/no-image.jpeg') }}" class="card-img-top actorImg"
-                        alt="{{$movie['original_title']}}">
+                    <img src="{{ asset('img/no-image.jpeg') }}" class="card-img-top actorImg" alt="{{$movie['original_title']}}">
                     @endif
                 </a>
                 <br>
@@ -267,8 +242,7 @@
 <!-- Start viewed section-->
 @if ($movies['viewed'])
 <div class="mb-3">
-    <button class="btn btn-primary w-100 p-2 font-weight-bold" type="button" data-toggle="collapse"
-        data-target="#viewedMovies" aria-expanded="false" aria-controls="collapseExample">
+    <button class="btn btn-primary w-100 p-2 font-weight-bold" type="button" data-toggle="collapse" data-target="#viewedMovies" aria-expanded="false" aria-controls="collapseExample">
         WATCHED
     </button>
 </div>
@@ -278,10 +252,8 @@
     <div id="multi-item-example-favorite-movies" class="carousel slide carousel-multi-item" data-ride="carousel">
         <!--Controls-->
         <div class="controls-top d-flex justify-content-center">
-            <a class="btn-floating h2 px-2" href="#multi-item-example-favorite-movies" data-slide="prev"><i
-                    class="fas fa-chevron-circle-left"></i></a>
-            <a class="btn-floating h2 px-2" href="#multi-item-example-favorite-movies" data-slide="next"><i
-                    class="fa fa-chevron-circle-right"></i></a>
+            <a class="btn-floating h2 px-2" href="#multi-item-example-favorite-movies" data-slide="prev"><i class="fas fa-chevron-circle-left"></i></a>
+            <a class="btn-floating h2 px-2" href="#multi-item-example-favorite-movies" data-slide="next"><i class="fa fa-chevron-circle-right"></i></a>
         </div>
         <!--/.Controls-->
         @php
@@ -289,16 +261,13 @@
         $divideMoviesPerFive = ceil($totalMovies / 5);
         @endphp
         <ol class="carousel-indicators">
-            @for ($index = 0; $index < $divideMoviesPerFive; $index++) <li
-                data-target="#multi-item-example-similar-movies" data-slide-to="{{ $index }}"
-                class="@if($index == 0) active @endif">
+            @for ($index = 0; $index < $divideMoviesPerFive; $index++) <li data-target="#multi-item-example-similar-movies" data-slide-to="{{ $index }}" class="@if($index == 0) active @endif">
                 </li>
                 @endfor
         </ol>
         <!--/.Indicators-->
         <div class="carousel-inner">
-            @for ($index = 0; $index < round(($totalMovies/10))*10; $index+=5) <div
-                class="carousel-item @if($index === 0) active @endif">
+            @for ($index = 0; $index < round(($totalMovies/10))*10; $index+=5) <div class="carousel-item @if($index === 0) active @endif">
                 <div class="row">
                     @foreach (array_slice($movies['viewed'], $index, 5) as $movie)
                     <div class="col">
@@ -306,11 +275,9 @@
                             <div class="d-flex flex-column align-items-center">
                                 <a href="{{ route('movie', $movie['id']) }}" class="text-decoration-none text-reset">
                                     @if ($movie['poster_path'])
-                                    <img src="https://image.tmdb.org/t/p/original{{$movie['poster_path']}}"
-                                        class="card-img-top actorImg" alt="{{$movie['original_title']}}">
+                                    <img src="https://image.tmdb.org/t/p/original{{$movie['poster_path']}}" class="card-img-top actorImg" alt="{{$movie['original_title']}}">
                                     @else
-                                    <img src="{{ asset('img/no-image.jpeg') }}" class="card-img-top actorImg"
-                                        alt="{{$movie['original_title']}}">
+                                    <img src="{{ asset('img/no-image.jpeg') }}" class="card-img-top actorImg" alt="{{$movie['original_title']}}">
                                     @endif
                                 </a>
                                 <br>
@@ -334,11 +301,9 @@
             <div class="d-flex flex-column align-items-center">
                 <a href="{{ route('movie', $movie['id']) }}" class="text-decoration-none text-reset">
                     @if ($movie['poster_path'])
-                    <img src="https://image.tmdb.org/t/p/original{{$movie['poster_path']}}"
-                        class="card-img-top actorImg" alt="{{$movie['original_title']}}">
+                    <img src="https://image.tmdb.org/t/p/original{{$movie['poster_path']}}" class="card-img-top actorImg" alt="{{$movie['original_title']}}">
                     @else
-                    <img src="{{ asset('img/no-image.jpeg') }}" class="card-img-top actorImg"
-                        alt="{{$movie['original_title']}}">
+                    <img src="{{ asset('img/no-image.jpeg') }}" class="card-img-top actorImg" alt="{{$movie['original_title']}}">
                     @endif
                 </a>
                 <br>
