@@ -140,11 +140,13 @@ class MovieController extends Controller
         }
 
 
-        return view('search-page', [
+        //return $searchArray;
+
+        return view('new-search', [
             'result' => $searchArray
         ]);
 
-        return $searchArray;
+
 
 
 
@@ -206,7 +208,8 @@ class MovieController extends Controller
             return $b['popularity'] <=> $a['popularity'];
         });
 
-        return array_slice($results, 0, 20);
+        return $results;
+        //return array_slice($results, 0, 20);
     }
 
     private function removeFakeActors($actorsArray)
